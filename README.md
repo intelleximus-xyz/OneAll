@@ -38,3 +38,17 @@ chmod +x connect_vm.sh
 
 ### 3. Stop
 To stop the connection, just press `Ctrl+C` in the terminal window.
+
+## Troubleshooting
+
+### Connection Refused / Timeout
+If `connect_vm.sh` runs fine but Microsoft Remote Desktop times out or refuses to connect, it is almost always a **Google Cloud Firewall** issue.
+
+**The Fix:**
+1.  Go to [GCP Firewall Rules](https://console.cloud.google.com/networking/firewalls/list).
+2.  Click **"Create Firewall Rule"**.
+3.  **Name:** `allow-iap-rdp`
+4.  **Targets:** `All instances in the network`
+5.  **Source IPv4 ranges:** `35.235.240.0/20` (This is the required IAP range).
+6.  **Protocols and ports:** Check `TCP` and type `3389`.
+7.  Click **Create**.
